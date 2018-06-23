@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.config;
 
+import com.polchlopek.praca.magisterska.controller.STMCommunication;
 import com.polchlopek.praca.magisterska.entity.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ public class Main extends Application {
         Image image = new Image("/image/icon.png");
         primaryStage.getIcons().add(image);
         primaryStage.show();
+
 
 
 //        VBox vBox = new VBox();

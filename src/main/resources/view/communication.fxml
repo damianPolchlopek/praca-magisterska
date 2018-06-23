@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<BorderPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.polchlopek.praca.magisterska.controller.STMCommunication">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.STMCommunication">
    <center>
-      <Label id="labelValue" text="Label" BorderPane.alignment="CENTER" />
+      <Label fx:id="labelValue" text="Label" BorderPane.alignment="CENTER" />
    </center>
    <top>
-      <ComboBox id="comboBoxPorts" prefWidth="150.0" BorderPane.alignment="CENTER" />
+      <ComboBox fx:id="comboBoxPorts"  prefWidth="150.0" BorderPane.alignment="CENTER" />
    </top>
+   <left>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#searchPort" text="Search Port" />
+            <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
+         </children>
+      </VBox>
+   </left>
 </BorderPane>
