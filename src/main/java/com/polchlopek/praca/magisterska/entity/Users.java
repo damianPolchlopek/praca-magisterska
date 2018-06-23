@@ -1,4 +1,4 @@
-package entity;
+package com.polchlopek.praca.magisterska.entity;
 
 import javax.persistence.*;
 

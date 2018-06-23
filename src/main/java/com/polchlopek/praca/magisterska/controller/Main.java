@@ -1,6 +1,6 @@
-package controller;
+package com.polchlopek.praca.magisterska.controller;
 
-import entity.Users;
+import com.polchlopek.praca.magisterska.entity.Users;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.sql.*;
 
 public class Main extends Application {
 

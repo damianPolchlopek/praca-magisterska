@@ -1,4 +1,4 @@
-package controller;
+package com.polchlopek.praca.magisterska.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
