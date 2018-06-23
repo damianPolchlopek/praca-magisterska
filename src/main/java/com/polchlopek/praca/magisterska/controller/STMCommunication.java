@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortException;
@@ -27,6 +28,9 @@ public class STMCommunication {
 
     @FXML
     private ComboBox comboBoxPorts;
+
+    @FXML
+    private ToggleButton diode;
 
     private ObservableList<String> portList;
 
@@ -61,7 +65,35 @@ public class STMCommunication {
                 });
     }
 
-    public boolean connectSTM(String port){
+    @FXML
+    private void toggleDiode(){
+        try {
+            if(diode.isSelected()){
+                if(stmPort != null){
+//                    stmPort.writeByte((byte)0x01);
+//                    stmPort.writeString("Test Test TestTest");
+//                    stmPort.writeIntArray(new int[]{0xFF, 0x00, 0xFF});
+
+                    System.out.println("LED 13 ON");
+                }else{
+                    System.out.println("stm not connected!");
+                }
+            }else {
+                if(stmPort != null){
+                    stmPort.writeByte((byte)0x00);
+                    System.out.println("LED 13 OFF");
+                }else{
+                    System.out.println("stm not connected!");
+                }
+            }
+        }catch (SerialPortException ex) {
+            Logger.getLogger(Main.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    private boolean connectSTM(String port){
 
         boolean success = false;
         SerialPort serialPort = new SerialPort(port);
@@ -73,24 +105,26 @@ public class STMCommunication {
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
             serialPort.setEventsMask(MASK_RXCHAR);
+
+
             serialPort.addEventListener((SerialPortEvent serialPortEvent) -> {
                 if(serialPortEvent.isRXCHAR()){
                     try {
 
                         byte[] b = serialPort.readBytes();
-
+                        String message = "";
 
                         System.out.println("*********************************************");
                         System.out.println("B: " + b[0] + ", size: " + b.length );
                         for (byte c: b){
-                            System.out.print((char)c + " ");
+                            System.out.print((char)c);
+                            message += (char)c;
                         }
 
                         int value = b[0] & 0xff;    //convert to int
-                        String st = String.valueOf(value);
+                        String st = String.valueOf(message);
                         System.out.println("ST: " + st);
                         System.out.println("*********************************************");
-
 
                         //Update label in ui thread
                         Platform.runLater(() -> {
@@ -116,7 +150,7 @@ public class STMCommunication {
         return success;
     }
 
-    public void disconnectSTM(){
+    private void disconnectSTM(){
 
         if(stmPort != null){
             try {
@@ -142,8 +176,6 @@ public class STMCommunication {
         }
 
     }
-
-
 
 
 }
