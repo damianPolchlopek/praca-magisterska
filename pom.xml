@@ -92,6 +92,11 @@
             <artifactId>commons-dbcp</artifactId>
             <version>${dbcp.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>5.0.3.RELEASE</version>
+        </dependency>
 
     </dependencies>
 

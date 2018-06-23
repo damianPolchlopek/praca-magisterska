@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<DialogPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.magisterska.ControllerNewNote">
+   <content>
+       <GridPane hgap="10" prefHeight="84.0" prefWidth="599.0" vgap="10">
+           <Label text="Heading:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+           <TextField fx:id="headingField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+           <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+           <TextArea fx:id="descriptionField" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+           <Label text="Author:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+           <TextField fx:id="authorField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+           <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+           <DatePicker fx:id="deadlinePicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+       </GridPane>
+   </content>
+</DialogPane>

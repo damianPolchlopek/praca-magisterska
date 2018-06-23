@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.controller;
 
+import com.polchlopek.praca.magisterska.config.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class Controller {
+public class MainWindow {
 
     @FXML
     private BorderPane mainBorderPane;
@@ -26,19 +27,19 @@ public class Controller {
 
     @FXML
     public void showTimeGraph() throws IOException {
-        Node root_time = FXMLLoader.load(getClass().getClassLoader().getResource("com/polchlopek/magisterska/centerTime.fxml"));
+        Node root_time = FXMLLoader.load(getClass().getResource("/view/centerTime.fxml"));
         mainBorderPane.setCenter(root_time);
     }
 
     @FXML
     public void showFrequenceGraph() throws IOException {
-        Node root_freq = FXMLLoader.load(getClass().getClassLoader().getResource("com/polchlopek/magisterska/centerFrequence.fxml"));
+        Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
         mainBorderPane.setCenter(root_freq);
     }
 
     @FXML
     public void showNotes() throws IOException {
-        Node root_notes = FXMLLoader.load(getClass().getClassLoader().getResource("com/polchlopek/magisterska/centerNotes.fxml"));
+        Node root_notes = FXMLLoader.load(getClass().getResource("/view/centerNotes.fxml"));
         mainBorderPane.setCenter(root_notes);
     }
 
@@ -143,7 +144,7 @@ public class Controller {
         }
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        ControllerHelp helpController = fxmlLoader.getController();
+        Help helpController = fxmlLoader.getController();
         helpController.setHelpLabel("Pomoc okienkowa na temat pomiarow !!!!");
         dialog.showAndWait();
     }
@@ -166,7 +167,7 @@ public class Controller {
         }
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        ControllerHelp helpController = fxmlLoader.getController();
+        Help helpController = fxmlLoader.getController();
         helpController.setHelpLabel("Frequence !!!!!!");
         dialog.showAndWait();
     }
@@ -189,7 +190,7 @@ public class Controller {
         }
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        ControllerHelp helpController = fxmlLoader.getController();
+        Help helpController = fxmlLoader.getController();
         helpController.setHelpLabel("Pomoc okienkowa na temat dodawania notatek !!!!");
         dialog.showAndWait();
     }

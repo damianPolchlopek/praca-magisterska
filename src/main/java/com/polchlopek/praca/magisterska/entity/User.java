@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Users {
     private Integer phone;
 
 
-    public Users() {
+    public User() {
     }
 
     public Integer getId() {

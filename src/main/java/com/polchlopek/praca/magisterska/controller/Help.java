@@ -3,7 +3,7 @@ package com.polchlopek.praca.magisterska.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class ControllerHelp {
+public class Help {
 
     @FXML
     private Label helpLabel;

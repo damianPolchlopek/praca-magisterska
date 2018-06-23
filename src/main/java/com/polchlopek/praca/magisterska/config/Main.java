@@ -1,10 +1,11 @@
-package com.polchlopek.praca.magisterska.controller;
+package com.polchlopek.praca.magisterska.config;
 
-import com.polchlopek.praca.magisterska.entity.Users;
+import com.polchlopek.praca.magisterska.entity.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,39 +26,9 @@ public class Main extends Application {
         primaryStage.setMaxHeight(700);
         primaryStage.setMinWidth(900);
         primaryStage.setMinHeight(600);
+        Image image = new Image("/image/icon.png");
+        primaryStage.getIcons().add(image);
         primaryStage.show();
-
-
-
-        // create session factory
-        SessionFactory factory = new Configuration()
-                .configure("/hibernate.cfg.xml")
-                .addAnnotatedClass(Users.class)
-                .buildSessionFactory();
-
-        // create sesion
-        Session session = factory.getCurrentSession();
-
-
-        // start a transaction
-        session.beginTransaction();
-
-        // get the instructor detail object
-        int theId = 3;
-        Users tempiInstructorDetails =
-                session.get(Users.class, theId);
-
-        //print the instructor detail
-        System.out.println("tempInstructor: " + tempiInstructorDetails);
-
-        // commit transaction
-        session.getTransaction().commit();
-
-        System.out.println("Done!");
-
-        session.close();
-
-        factory.close();
 
 
 //        VBox vBox = new VBox();
