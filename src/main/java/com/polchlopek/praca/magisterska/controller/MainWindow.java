@@ -44,6 +44,12 @@ public class MainWindow {
     }
 
     @FXML
+    public void showSTMCommunication() throws IOException {
+        Node root_notes = FXMLLoader.load(getClass().getResource("/view/communication.fxml"));
+        mainBorderPane.setCenter(root_notes);
+    }
+
+    @FXML
     public void logout() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("loginPanel.fxml"));
         Main.getPrimaryStage().setScene(new Scene(root,900, 600));

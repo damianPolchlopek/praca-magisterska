@@ -13,9 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0"
-            stylesheets="/css/mainWindow.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.polchlopek.praca.magisterska.controller.MainWindow">
+<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0" stylesheets="/css/mainWindow.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.MainWindow">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -86,6 +84,11 @@
             <ImageView id="logoutImage" fitHeight="100.0" fitWidth="150.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="/image/logout.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="10.0" layoutY="311.0" onMouseClicked="#showSTMCommunication" pickOnBounds="true">
+               <image>
+                  <Image url="/image/stm.png" />
                </image>
             </ImageView>
          </children>

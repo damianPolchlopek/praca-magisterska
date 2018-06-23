@@ -31,27 +31,33 @@ public class LoginPanel {
     @FXML
     public void checkLogin(ActionEvent event) throws IOException {
 
-        PersonDAO personDAO = new PersonDAO();
+        Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
+        Scene mainWindowScene = new Scene(mainWindow);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(mainWindowScene);
+        window.show();
 
-        String login = loginTextField.getText().trim();
-        String password = passwordField.getText().trim();
-        User user = personDAO.getPerson(login);
-
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String passwordFromDb = user.getPassword().substring(8, user.getPassword().length());
-
-        if(user != null &&
-                passwordEncoder.matches(password, passwordFromDb )) {
-
-            Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
-            Scene mainWindowScene = new Scene(mainWindow);
-            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            window.setScene(mainWindowScene);
-            window.show();
-        }
-        else{
-            checkCorrectPassLabel.setText("Incorrect pass or login !!!");
-        }
+//        PersonDAO personDAO = new PersonDAO();
+//
+//        String login = loginTextField.getText().trim();
+//        String password = passwordField.getText().trim();
+//        User user = personDAO.getPerson(login);
+//
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String passwordFromDb = user.getPassword().substring(8, user.getPassword().length());
+//
+//        if(user != null &&
+//                passwordEncoder.matches(password, passwordFromDb )) {
+//
+//            Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
+//            Scene mainWindowScene = new Scene(mainWindow);
+//            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+//            window.setScene(mainWindowScene);
+//            window.show();
+//        }
+//        else{
+//            checkCorrectPassLabel.setText("Incorrect pass or login !!!");
+//        }
     }
 
 
