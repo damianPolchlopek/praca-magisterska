@@ -29,7 +29,7 @@ public class LoginPanel {
     @FXML
     public void checkLogin(ActionEvent event) throws IOException {
         if(loginTextField.getText().trim().equals("") && passwordField.getText().trim().equals("")){
-            Parent mainWindow = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+            Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
             Scene mainWindowScene = new Scene(mainWindow);
             Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
             window.setScene(mainWindowScene);

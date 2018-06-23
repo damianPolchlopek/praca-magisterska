@@ -1,0 +1,20 @@
+
+
+#menuLabel
+{
+ -fx-text-fill: #B0B0B0;
+ -fx-font-size: 32px;
+ -fx-font-family: "Arial Black";
+ -fx-fill: #EAEAEA;
+ -fx-font-weight: bold;
+ -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2);
+}
+
+#authorLabel
+{
+ -fx-text-fill: #B0B0B0;
+ -fx-font-family: "Arial Black";
+ -fx-fill: #EAEAEA;
+ -fx-font-weight: bold;
+ -fx-effect: innershadow(three-pass-box, rgba(0,0,0,0.7), 6, 0.0, 0, 2);
+}

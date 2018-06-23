@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0"
+            stylesheets="/css/mainWindow.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.polchlopek.praca.magisterska.controller.Controller">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveDiagrams" text="Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#openDiagrams" text="Open" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Time Signal">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutTimeDialog" text="About" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#showHelpTimeDialog" text="Help" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Frequence Signal">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutFrequenceDialog" text="About" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Note">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutNoteDialog" text="About" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#showHelpDialog" text="Help" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" BorderPane.alignment="CENTER_LEFT">
+         <children>
+            <Label id="menuLabel" text="Menu" />
+            <ImageView fitHeight="100.0" fitWidth="150.0" onMouseClicked="#showTimeGraph" pickOnBounds="true">
+               <image>
+                  <Image url="/image/dziedzina_czasu.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="150.0" onMouseClicked="#showFrequenceGraph" pickOnBounds="true">
+               <image>
+                  <Image url="/image/dziedzina_czest.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="150.0" onMouseClicked="#showNotes" pickOnBounds="true">
+               <image>
+                  <Image url="/image/notatki.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></ImageView>
+            <ImageView id="logoutImage" fitHeight="100.0" fitWidth="150.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/image/logout.png" />
+               </image>
+            </ImageView>
+         </children>
+         <opaqueInsets>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <bottom>
+      <Label fx:id="authorLabel" text="Autor: Damian Polchlopek" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </bottom>
+</BorderPane>
