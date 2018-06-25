@@ -22,8 +22,6 @@ public class MainWindow {
     @FXML
     private BorderPane mainBorderPane;
 
-    @FXML
-    private ImageView logoutImage;
 
     @FXML
     public void showTimeGraph() throws IOException {
@@ -51,7 +49,7 @@ public class MainWindow {
 
     @FXML
     public void logout() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("loginPanel.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/loginPanel.fxml"));
         Main.getPrimaryStage().setScene(new Scene(root,900, 600));
     }
 
@@ -139,15 +137,9 @@ public class MainWindow {
         dialog.setTitle("Help Time Signal");
         dialog.setHeaderText("In this window you can see all important information about signal");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("helpDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
 
-        try{
-            dialog.getDialogPane().setContent(fxmlLoader.load());
-        } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
-            return;
-        }
+        if (loadContentToScreen(dialog, fxmlLoader)) return;
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
@@ -162,15 +154,9 @@ public class MainWindow {
         dialog.setTitle("Help Frequence Signal");
         dialog.setHeaderText("In this window you can see all important information about signal");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("helpDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
 
-        try{
-            dialog.getDialogPane().setContent(fxmlLoader.load());
-        } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
-            return;
-        }
+        if (loadContentToScreen(dialog, fxmlLoader)) return;
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
@@ -185,20 +171,25 @@ public class MainWindow {
         dialog.setTitle("Help Note");
         dialog.setHeaderText("In this window you can see all important information about note");
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("helpDialog.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
 
-        try{
-            dialog.getDialogPane().setContent(fxmlLoader.load());
-        } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
-            return;
-        }
+        if (loadContentToScreen(dialog, fxmlLoader)) return;
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
         helpController.setHelpLabel("Pomoc okienkowa na temat dodawania notatek !!!!");
         dialog.showAndWait();
+    }
+
+    private boolean loadContentToScreen(Dialog<ButtonType> dialog, FXMLLoader fxmlLoader) {
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+            return true;
+        }
+        return false;
     }
 
 }

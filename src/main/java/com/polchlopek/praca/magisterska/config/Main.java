@@ -1,7 +1,7 @@
 package com.polchlopek.praca.magisterska.config;
 
 import com.polchlopek.praca.magisterska.controller.STMCommunication;
-import com.polchlopek.praca.magisterska.entity.User;
+import com.polchlopek.praca.magisterska.DTO.notedata.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -54,12 +56,22 @@ public class Main extends Application {
 
     @Override
     public void stop() throws Exception {
-
+        try{
+            NoteData.getInstance().storeNoteItems();
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
     public void init() throws Exception {
-
+        try{
+            NoteData.getInstance().loadNoteItems();
+        }
+        catch(IOException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     static public Stage getPrimaryStage() {
