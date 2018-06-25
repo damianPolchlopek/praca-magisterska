@@ -7,19 +7,32 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.polchlopek.praca.magisterska.controller.STMCommunication">
 
    <center>
-      <Label fx:id="labelValue" text="Label" BorderPane.alignment="CENTER" />
+
+      <LineChart fx:id="lineChartTime" title="STM32 A0 Analog Input" BorderPane.alignment="CENTER">
+         <xAxis>
+            <NumberAxis side="BOTTOM" fx:id="xAxis" />
+         </xAxis>
+         <yAxis>
+            <NumberAxis fx:id="yAxis" side="LEFT" />
+         </yAxis>
+      </LineChart>
    </center>
    <top>
+
       <ComboBox fx:id="comboBoxPorts"  prefWidth="150.0" BorderPane.alignment="CENTER" />
    </top>
    <left>
       <VBox BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="labelValue" text="Label" BorderPane.alignment="CENTER" />
+            <Button mnemonicParsing="false" onAction="#drawChart" text="InitChart" />
             <Button mnemonicParsing="false" onAction="#searchPort" text="Search Port" />
             <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect" />
             <ToggleButton mnemonicParsing="false" fx:id="diode" onAction="#toggleDiode" text="Dioda"/>

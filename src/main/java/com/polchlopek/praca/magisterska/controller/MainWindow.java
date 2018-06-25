@@ -30,6 +30,12 @@ public class MainWindow {
     }
 
     @FXML
+    public void showRealTimeGraph() throws IOException {
+        Node root_time = FXMLLoader.load(getClass().getResource("/view/realTimeChart.fxml"));
+        mainBorderPane.setCenter(root_time);
+    }
+
+    @FXML
     public void showFrequenceGraph() throws IOException {
         Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
         mainBorderPane.setCenter(root_freq);

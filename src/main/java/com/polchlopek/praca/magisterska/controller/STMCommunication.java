@@ -6,10 +6,17 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortException;
@@ -32,11 +39,23 @@ public class STMCommunication {
     @FXML
     private ToggleButton diode;
 
+    @FXML
+    private LineChart<Number, Number> lineChartTime;
+
+    @FXML
+    private NumberAxis xAxis;
+
+    @FXML
+    private NumberAxis yAxis;
+
+
     private ObservableList<String> portList;
 
     private SerialPort stmPort = null;
 
+    final int NUM_OF_POINT = 50;
 
+    XYChart.Series series;
 
 
     @FXML
@@ -70,17 +89,14 @@ public class STMCommunication {
         try {
             if(diode.isSelected()){
                 if(stmPort != null){
-//                    stmPort.writeByte((byte)0x01);
-//                    stmPort.writeString("Test Test TestTest");
-//                    stmPort.writeIntArray(new int[]{0xFF, 0x00, 0xFF});
-
+                    stmPort.writeString("1");
                     System.out.println("LED 13 ON");
                 }else{
                     System.out.println("stm not connected!");
                 }
             }else {
                 if(stmPort != null){
-                    stmPort.writeByte((byte)0x00);
+                    stmPort.writeString("2");
                     System.out.println("LED 13 OFF");
                 }else{
                     System.out.println("stm not connected!");
@@ -106,7 +122,6 @@ public class STMCommunication {
                     SerialPort.PARITY_NONE);
             serialPort.setEventsMask(MASK_RXCHAR);
 
-
             serialPort.addEventListener((SerialPortEvent serialPortEvent) -> {
                 if(serialPortEvent.isRXCHAR()){
                     try {
@@ -114,22 +129,26 @@ public class STMCommunication {
                         byte[] b = serialPort.readBytes();
                         String message = "";
 
-                        System.out.println("*********************************************");
-                        System.out.println("B: " + b[0] + ", size: " + b.length );
-                        for (byte c: b){
-                            System.out.print((char)c);
-                            message += (char)c;
+                        if (b.length != 0){
+                            for (byte c: b){
+                                message += (char)c;
+                            }
+
+                            float sendedValue = Float.parseFloat(message);
+
+                            String st = String.valueOf(message);
+
+                            System.out.println("*********************************************");
+                            System.out.println("Wiadomosc przychodzaca: " + message);
+                            System.out.println("*********************************************");
+
+                            //Update label in ui thread
+                            Platform.runLater(() -> {
+                                labelValue.setText(st);
+                                shiftSeriesData(sendedValue);
+                            });
                         }
 
-                        int value = b[0] & 0xff;    //convert to int
-                        String st = String.valueOf(message);
-                        System.out.println("ST: " + st);
-                        System.out.println("*********************************************");
-
-                        //Update label in ui thread
-                        Platform.runLater(() -> {
-                            labelValue.setText(st);
-                        });
 
                     } catch (SerialPortException ex) {
                         Logger.getLogger(Main.class.getName())
@@ -177,5 +196,66 @@ public class STMCommunication {
 
     }
 
+    public void shiftSeriesData(float newValue)
+    {
+        for(int i=0; i<NUM_OF_POINT-1; i++){
+            XYChart.Data<String, Number> ShiftDataUp =
+                    (XYChart.Data<String, Number>)series.getData().get(i+1);
+            Number shiftValue = ShiftDataUp.getYValue();
+            XYChart.Data<String, Number> ShiftDataDn =
+                    (XYChart.Data<String, Number>)series.getData().get(i);
+            ShiftDataDn.setYValue(shiftValue);
+        }
+        XYChart.Data<String, Number> lastData =
+                (XYChart.Data<String, Number>)series.getData().get(NUM_OF_POINT-1);
+        lastData.setYValue(newValue);
+    }
 
+    public void drawChart(){
+        series = new XYChart.Series();
+        series.setName("A0 analog input");
+        lineChartTime.getData().add(series);
+        lineChartTime.setAnimated(false);
+        xAxis.setLabel("Przyspieszenie");
+        yAxis.setLabel("Temperature [C]");
+
+        //pre-load with dummy data
+        for(int i=0; i<NUM_OF_POINT; i++){
+            series.getData().add(new XYChart.Data(i, 0));
+        }
+
+    }
+
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(int value) {
+            setPrefSize(15, 15);
+
+            final Label label = createDataThresholdLabel(value);
+
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+
+        private Label createDataThresholdLabel(int value) {
+            final Label label = new Label(value + "");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
+        }
+
+    }
 }

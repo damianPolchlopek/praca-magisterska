@@ -91,6 +91,11 @@
                   <Image url="/image/stm.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="10.0" layoutY="42.0" onMouseClicked="#showRealTimeGraph" pickOnBounds="true">
+               <image>
+                  <Image url="/image/dziedzina_czasu.png" />
+               </image>
+            </ImageView>
          </children>
          <opaqueInsets>
             <Insets bottom="10.0" left="10.0" top="10.0" />
