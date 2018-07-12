@@ -21,7 +21,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/view/loginPanel.fxml"));
         primaryStage.setTitle("Pomiary");
         primaryStage.setScene(new Scene(root, 900, 600));
-        primaryStage.setMaxWidth(1000);
+//        primaryStage.setMaxWidth(1000);
 //        primaryStage.setMaxHeight(700);
         primaryStage.setMinWidth(900);
         primaryStage.setMinHeight(600);
