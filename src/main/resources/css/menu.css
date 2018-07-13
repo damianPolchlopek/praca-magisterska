@@ -1,0 +1,7 @@
+#menu{
+    -fx-border-width: 3px;
+    -fx-border-color: red;
+    -fx-border-style: dashed;
+    -fx-border-insets: 5px;
+
+}

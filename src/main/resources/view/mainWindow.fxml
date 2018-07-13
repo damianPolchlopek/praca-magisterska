@@ -81,19 +81,19 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin></ImageView>
-            <ImageView id="logoutImage" fitHeight="100.0" fitWidth="150.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="/image/logout.png" />
-               </image>
-            </ImageView>
             <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="10.0" layoutY="311.0" onMouseClicked="#showSTMCommunication" pickOnBounds="true">
                <image>
                   <Image url="/image/stm.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="10.0" layoutY="42.0" onMouseClicked="#showRealTimeGraph" pickOnBounds="true">
+            <ImageView fitHeight="100.0" fitWidth="150.0" layoutX="10.0" layoutY="387.0" onMouseClicked="#showDatabase" pickOnBounds="true">
                <image>
-                  <Image url="/image/dziedzina_czasu.png" />
+                  <Image url="/image/database.png" />
+               </image>
+            </ImageView>
+            <ImageView id="logoutImage" fitHeight="100.0" fitWidth="150.0" onMouseClicked="#logout" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/image/logout.png" />
                </image>
             </ImageView>
          </children>

@@ -30,12 +30,6 @@ public class MainWindow {
     }
 
     @FXML
-    public void showRealTimeGraph() throws IOException {
-        Node root_time = FXMLLoader.load(getClass().getResource("/view/realTimeChart.fxml"));
-        mainBorderPane.setCenter(root_time);
-    }
-
-    @FXML
     public void showFrequenceGraph() throws IOException {
         Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
         mainBorderPane.setCenter(root_freq);
@@ -50,6 +44,12 @@ public class MainWindow {
     @FXML
     public void showSTMCommunication() throws IOException {
         Node root_notes = FXMLLoader.load(getClass().getResource("/view/communication.fxml"));
+        mainBorderPane.setCenter(root_notes);
+    }
+
+    @FXML
+    public void showDatabase() throws IOException {
+        Node root_notes = FXMLLoader.load(getClass().getResource("/view/database.fxml"));
         mainBorderPane.setCenter(root_notes);
     }
 
