@@ -13,13 +13,13 @@ public class Login {
 	@Column(name="id")
 	private int id;
 	
-	@Column(name="date_log")
+	@Column(name="date")
 	private Date dateLog;
 	
-	@Column(name="time_log")
+	@Column(name="time")
 	private Time timeLog;
 	
-	@Column(name="location_log")
+	@Column(name="location")
 	private String locationLog;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,

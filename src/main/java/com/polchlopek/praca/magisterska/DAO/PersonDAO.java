@@ -1,11 +1,13 @@
 package com.polchlopek.praca.magisterska.DAO;
 
+import com.polchlopek.praca.magisterska.entity.Login;
 import com.polchlopek.praca.magisterska.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class PersonDAO {
@@ -13,10 +15,7 @@ public class PersonDAO {
 	private SessionFactory factory;
 
 	public PersonDAO() {
-		factory = new Configuration()
-			.configure("/hibernate.cfg.xml")
-			.addAnnotatedClass(User.class)
-			.buildSessionFactory();
+		factory = SessionFact.getInstance().getSessionFactory();
 	}
 
 	public User getPerson(String nickName) {

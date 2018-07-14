@@ -3,7 +3,7 @@ package com.polchlopek.praca.magisterska.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="users")
+@Table(name="user")
 public class User {
 
     @Id

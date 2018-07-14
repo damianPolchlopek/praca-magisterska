@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.config;
 
+import com.polchlopek.praca.magisterska.DAO.*;
 import com.polchlopek.praca.magisterska.DTO.notedata.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,23 @@ public class Main extends Application {
         Image image = new Image("/image/icon.png");
         primaryStage.getIcons().add(image);
         primaryStage.show();
+
+        // test DAO object
+//        PersonDAO per = new PersonDAO();
+//        System.out.println(per.getPerson("damian"));
+//
+//        LoginDAO log = new LoginDAO();
+//        System.out.println("login: " + log.getLogins());
+//
+//        MeasurementDAO meas = new MeasurementDAO();
+//        System.out.println("meas: " + meas.getMeasurements());
+//        System.out.println("meas: " + meas.getMeasurement(1));
+//
+//        MeasurementDataDAO arr = new MeasurementDataDAO();
+//        System.out.println("arr: " + arr.getDataMeassurement(1));
+//
+//        MeasurementCategoryDAO cat = new MeasurementCategoryDAO();
+//        System.out.println("cat: " + cat.getArrayMeassurement(1));
 
     }
 
