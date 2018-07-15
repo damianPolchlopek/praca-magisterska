@@ -16,8 +16,11 @@ public class MeasurementToTable {
 
     private String description;
 
+    private int id;
+
 
     public MeasurementToTable(Measurement measurement) {
+        this.id = measurement.getId();
         this.firstName = measurement.getUserID().getFirstName();
         this.lastName = measurement.getUserID().getLastName();
         this.date = measurement.getDateMeasurement();
@@ -25,6 +28,13 @@ public class MeasurementToTable {
         this.description = measurement.getDescription();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

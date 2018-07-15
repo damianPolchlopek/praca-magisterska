@@ -12,15 +12,17 @@ import com.polchlopek.praca.magisterska.entity.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 
+import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class Database {
 
@@ -83,27 +85,105 @@ public class Database {
     @FXML
     private TableColumn<String, String> locationLoginCol;
 
-
-
-
     private List<MeasurementToTable> measurementsDB;
     private List<LoginToTable> loginsDB;
     private List<User> users;
 
 
+    // DODAWANIE NOWEGO UZYTKOWNIKA
     @FXML
-    private void search(){
+    private TextField firstNameTextField;
 
-//        MeasurementDAO meas = new MeasurementDAO();
-//        measurements = meas.getMeasurements();
-//
-//        ObservableList<Measurement> obserList = FXCollections.observableArrayList(measurements);
-//        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-//        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//        dateCol.setCellValueFactory(new PropertyValueFactory<>("dateMeasurement"));
-//        descriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-//        categoryCol.setCellValueFactory(new PropertyValueFactory<>("category"));
-//        measurementTable.setItems(obserList);
+    @FXML
+    private TextField lastNameTextField;
+
+    @FXML
+    private TextField nicknameTextField;
+
+    @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private PasswordField passwordTextField;
+
+    @FXML
+    private PasswordField password2TextField;
+
+    @FXML
+    private TextField phoneTextField;
+
+
+    // MENU KONTEKSTOWE
+    @FXML
+    private MenuItem measurementDeleteMenuItem;
+
+    @FXML
+    private MenuItem userDeleteMenuItem;
+
+    @FXML
+    private MenuItem loginDeleteMenuItem;
+
+
+    @FXML
+    private BorderPane mainPanel;
+
+
+
+    public void initialize(){
+
+        measurementDeleteMenuItem.setOnAction(event -> {
+            MeasurementToTable measFromTable = measurementTable.getSelectionModel().getSelectedItem();
+            Measurement measurement = new Measurement(measFromTable);
+            MeasurementDAO measDAO = new MeasurementDAO();
+            measDAO.deleteMeasurement(measurement);
+//            initMeasurementTab();
+        });
+
+        userDeleteMenuItem.setOnAction(event -> {
+            User user = userTable.getSelectionModel().getSelectedItem();
+            PersonDAO perDAO = new PersonDAO();
+            perDAO.deletePerson(user);
+            initUserTab();
+        });
+
+        loginDeleteMenuItem.setOnAction(event -> {
+            LoginToTable loginToTable = loginTable.getSelectionModel().getSelectedItem();
+            LoginDAO logDAO = new LoginDAO();
+            Login login = logDAO.getLogin(loginToTable.getId());
+            logDAO.deleteLogin(login);
+            initLoginTab();
+        });
+    }
+
+
+    @FXML
+    public void updateUserMenuItem(){
+        User selectedUser = userTable.getSelectionModel().getSelectedItem();
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainPanel.getScene().getWindow());
+        dialog.setTitle("Edit User");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/view/updateUser.fxml"));
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch(IOException e){
+            e.printStackTrace();
+            return;
+        }
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+        UpdateUser userController = fxmlLoader.getController();
+        userController.editUser(selectedUser);
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            User user = userController.updateUser(selectedUser);
+            PersonDAO perDAO = new PersonDAO();
+            perDAO.savePerson(user);
+            initUserTab();
+        }
+
     }
 
 
@@ -160,6 +240,28 @@ public class Database {
         locationLoginCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         loginTable.setItems(obserList);
     }
+
+    @FXML
+    private void addUser(){
+        String firstName = firstNameTextField.getText().trim();
+        String lastName = lastNameTextField.getText().trim();
+        String email = emailTextField.getText().trim();
+        Integer phone = Integer.parseInt(phoneTextField.getText().trim());
+        String password = passwordTextField.getText().trim();
+        String password2 = password2TextField.getText().trim();
+        String username = nicknameTextField.getText().trim();
+
+        // dorobic sprawdzanie poprawsci danych
+        // np. czy 2 wprowadzone hasla sie zgadzaja
+
+
+        User userToAdd = new User(username, firstName, lastName, email, password, phone);
+        PersonDAO per = new PersonDAO();
+        per.savePerson(userToAdd);
+
+        initUserTab();
+    }
+
 
 
 }

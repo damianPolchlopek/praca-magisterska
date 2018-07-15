@@ -26,36 +26,55 @@
          </yAxis>
       </LineChart>
    </center>
-   <top>
-
-      <ComboBox fx:id="comboBoxPorts" prefWidth="150.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets top="5.0" />
-         </BorderPane.margin></ComboBox>
-   </top>
    <left>
-      <VBox prefHeight="195.0" prefWidth="77.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="511.0" prefWidth="110.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="labelValue" text="Wykres" BorderPane.alignment="CENTER">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin></Label>
-            <Button mnemonicParsing="false" onAction="#searchPort" text="Search Port">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin></Button>
-            <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin></Button>
-            <Button mnemonicParsing="false" onAction="#drawChart" text="InitChart">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin></Button>
-            <ToggleButton fx:id="diode" mnemonicParsing="false" onAction="#toggleDiode" text="Dioda">
-               <VBox.margin>
-                  <Insets bottom="5.0" top="5.0" />
-               </VBox.margin></ToggleButton>
+            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Label fx:id="labelValue" text="Wykres">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#drawChart" text="InitChart">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+            </VBox>
+            <VBox id="menu" prefHeight="154.0" prefWidth="77.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Label stylesheets="@../css/menu.css" text="Komunikacja" />
+                  <Button mnemonicParsing="false" onAction="#searchPort" text="Search Port">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+            
+                  <ComboBox fx:id="comboBoxPorts" prefWidth="150.0">
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets></ComboBox>
+                  <Button mnemonicParsing="false" onAction="#disconnect" text="Disconnect">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Label text="STM" />
+                  <ToggleButton fx:id="diode" mnemonicParsing="false" onAction="#toggleDiode" text="Dioda" />
+               </children>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" />

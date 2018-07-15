@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<DialogPane prefHeight="212.0" prefWidth="291.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.UpdateUser">
+
+    <headerText>
+        Update information about user
+    </headerText>
+
+    <content>
+        <GridPane alignment="CENTER" prefHeight="0.0" prefWidth="279.0">
+            <Label prefHeight="17.0" prefWidth="85.0" text="First Name: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="firstName" prefHeight="25.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin></TextField>
+
+            <Label text="Last Name: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="lastName" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin></TextField>
+
+            <Label text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin></TextField>
+
+            <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin></TextField>
+
+            <Label text="Phone:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <TextField fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin></TextField>
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+
+        </GridPane>
+    </content>
+
+
+
+</DialogPane>

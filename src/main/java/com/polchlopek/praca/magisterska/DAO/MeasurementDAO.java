@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.DAO;
 
+import com.polchlopek.praca.magisterska.DTO.MeasurementToTable;
 import com.polchlopek.praca.magisterska.entity.Measurement;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +15,6 @@ public class MeasurementDAO {
     public MeasurementDAO() {
         sessionFactory = SessionFact.getInstance().getSessionFactory();
     }
-
 
     public List<Measurement> getMeasurements() {
 
@@ -49,7 +49,19 @@ public class MeasurementDAO {
         finally {
             currentSession.getTransaction().commit();
         }
+    }
 
+    public void deleteMeasurement(Measurement measurement){
+
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.beginTransaction();
+
+        try{
+            currentSession.delete(measurement);
+        }
+        finally {
+            currentSession.getTransaction().commit();
+        }
     }
 
 

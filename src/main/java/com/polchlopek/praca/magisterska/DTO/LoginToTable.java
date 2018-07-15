@@ -18,12 +18,23 @@ public class LoginToTable {
 
     private String location;
 
+    private int id;
+
     public LoginToTable(Login login) {
+        this.id = login.getId();
         this.firstName = login.getUserID().getFirstName();
         this.lastName = login.getUserID().getLastName();
         this.date = login.getDateLog();
         this.time = login.getTimeLog();
         this.location = login.getLocationLog();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {

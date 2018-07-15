@@ -1,5 +1,7 @@
 package com.polchlopek.praca.magisterska.entity;
 
+import com.polchlopek.praca.magisterska.DAO.MeasurementDAO;
+import com.polchlopek.praca.magisterska.DTO.MeasurementToTable;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -47,6 +49,28 @@ public class Measurement {
 		this.description = description;
 	}
 
+	public Measurement(MeasurementToTable meas) {
+
+		MeasurementDAO measDAO = new MeasurementDAO();
+		Measurement measurement = measDAO.getMeasurement(meas.getId());
+
+		this.dateMeasurement = measurement.getDateMeasurement();
+		this.description = measurement.getDescription();
+		this.category = measurement.getCategory();
+		this.userID = measurement.getUserID();
+		this.nodes = measurement.getNodes();
+	}
+
+	public Measurement(Date dateMeasurement, String description,
+					   MeasurementCategory category, User userID,
+					   List<MeasurementData> nodes) {
+
+		this.dateMeasurement = dateMeasurement;
+		this.description = description;
+		this.category = category;
+		this.userID = userID;
+		this.nodes = nodes;
+	}
 
 	public List<MeasurementData> getNodes() {
 		return nodes;

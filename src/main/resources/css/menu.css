@@ -3,5 +3,6 @@
     -fx-border-color: red;
     -fx-border-style: dashed;
     -fx-border-insets: 5px;
-
+    -fx-min-width: 125px;
+    -fx-alignment: center;
 }

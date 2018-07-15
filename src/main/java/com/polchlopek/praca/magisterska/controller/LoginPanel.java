@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.controller;
 
+import com.polchlopek.praca.magisterska.DAO.LoginDAO;
 import com.polchlopek.praca.magisterska.DAO.PersonDAO;
 import com.polchlopek.praca.magisterska.entity.User;
 import javafx.event.ActionEvent;
@@ -37,8 +38,9 @@ public class LoginPanel {
         window.setScene(mainWindowScene);
         window.show();
 
+
+
 //        PersonDAO personDAO = new PersonDAO();
-//
 //        String login = loginTextField.getText().trim();
 //        String password = passwordField.getText().trim();
 //        User user = personDAO.getPerson(login);
@@ -49,6 +51,9 @@ public class LoginPanel {
 //        if(user != null &&
 //                passwordEncoder.matches(password, passwordFromDb )) {
 //
+//            LoginDAO log = new LoginDAO();
+//            log.addLogin(user);
+//
 //            Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
 //            Scene mainWindowScene = new Scene(mainWindow);
 //            Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -58,6 +63,8 @@ public class LoginPanel {
 //        else{
 //            checkCorrectPassLabel.setText("Incorrect pass or login !!!");
 //        }
+
+
     }
 
 

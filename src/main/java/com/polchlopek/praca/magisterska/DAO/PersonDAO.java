@@ -68,9 +68,32 @@ public class PersonDAO {
 		finally {
 			currentSession.getTransaction().commit();
 		}
-
 	}
 
+	public void savePerson(User user){
+
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.beginTransaction();
+
+		try{
+			currentSession.saveOrUpdate(user);
+		}
+		finally {
+			currentSession.getTransaction().commit();
+		}
+	}
+
+	public void deletePerson(User user){
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.beginTransaction();
+
+		try{
+			currentSession.delete(user);
+		}
+		finally {
+			currentSession.getTransaction().commit();
+		}
+	}
 
 
 }
