@@ -58,6 +58,7 @@ public class Main extends Application {
     public void stop() throws Exception {
         try{
             NoteData.getInstance().storeNoteItems();
+            SessionFact.getInstance().getSessionFactory().close();
         }
         catch(IOException e){
             System.out.println(e.getMessage());

@@ -23,10 +23,10 @@ import java.util.Optional;
 public class Notes {
 
     @FXML
-    BorderPane noteBorderPane;
+    private BorderPane noteBorderPane;
 
     @FXML
-    ListView<NoteItem> noteListView;
+    private ListView<NoteItem> noteListView;
 
     @FXML
     private Label deadlineLabel;

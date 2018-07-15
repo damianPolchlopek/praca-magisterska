@@ -1,26 +1,23 @@
 package com.polchlopek.praca.magisterska.DAO;
 
-import com.polchlopek.praca.magisterska.entity.Login;
 import com.polchlopek.praca.magisterska.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public class PersonDAO {
 
-	private SessionFactory factory;
+	private SessionFactory sessionFactory;
 
 	public PersonDAO() {
-		factory = SessionFact.getInstance().getSessionFactory();
+		sessionFactory = SessionFact.getInstance().getSessionFactory();
 	}
 
 	public User getPerson(String nickName) {
 
-		Session session = factory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 
 		Query<User> theQuery = session.createQuery("from User where username=:nickName");
@@ -40,7 +37,7 @@ public class PersonDAO {
 
 	public boolean isUsername(String nickName) {
 
-		Session session = factory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 
 		Query<User> theQuery = session.createQuery("from User where username=:nickName");
@@ -55,6 +52,21 @@ public class PersonDAO {
 		}
 		else{
 			return true;
+		}
+	}
+
+	public List<User> getPeople() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.beginTransaction();
+
+		try{
+			Query<User> theQuery =
+					currentSession.createQuery("from User", User.class);
+
+			return theQuery.getResultList();
+		}
+		finally {
+			currentSession.getTransaction().commit();
 		}
 
 	}

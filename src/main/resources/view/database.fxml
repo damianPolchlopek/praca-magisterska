@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="500.0" prefWidth="700.0"
-            stylesheets="@/css/centerTime.css" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.polchlopek.praca.magisterska.controller.Database">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@/css/centerTime.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.Database">
 
     <center>
 
     </center>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab onSelectionChanged="#initMeasurementTab" text="Measurement's">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="measurementTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="firstNameCol" prefWidth="100.0" text="First Name" />
+                            <TableColumn fx:id="lastNameCol" prefWidth="100.0" text="Last Name" />
+                              <TableColumn fx:id="dateCol" prefWidth="100.0" text="Date" />
+                              <TableColumn fx:id="categoryCol" prefWidth="100.0" text="Category" />
+                              <TableColumn fx:id="descriptionCol" prefWidth="200.0" text="Description" />
+                          </columns>
+                        </TableView>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab onSelectionChanged="#initUserTab" text="User's">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="userTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="firstNameUserCol" prefWidth="75.0" text="First Name" />
+                            <TableColumn fx:id="lastNameUserCol" prefWidth="75.0" text="Last Name" />
+                              <TableColumn fx:id="emailUserCol" prefWidth="75.0" text="Email" />
+                              <TableColumn fx:id="phoneUserCol" prefWidth="75.0" text="Phone" />
+                          </columns>
+                        </TableView>
+                     </center></BorderPane>
+               </content>
+          </Tab>
+            <Tab onSelectionChanged="#initLoginTab" text="Login's">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="loginTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="firstNameLoginCol" prefWidth="75.0" text="First Name" />
+                            <TableColumn fx:id="lastNameLoginCol" prefWidth="75.0" text="Last Name" />
+                              <TableColumn fx:id="dateLoginCol" prefWidth="75.0" text="Date" />
+                              <TableColumn fx:id="timeLoginCol" prefWidth="75.0" text="Time" />
+                              <TableColumn fx:id="locationLoginCol" prefWidth="75.0" text="Location" />
+                          </columns>
+                        </TableView>
+                     </center></BorderPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <top>
+      <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#search" text="Search" BorderPane.alignment="CENTER" />
+   </top>
 
 </BorderPane>
