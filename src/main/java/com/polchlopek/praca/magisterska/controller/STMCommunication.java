@@ -48,13 +48,16 @@ public class STMCommunication {
 
     // Radio buttony odzpowiedzialne za wybor algorytmu
     @FXML
-    private RadioButton FFT;
+    private RadioButton FFT_None;
 
     @FXML
     private RadioButton FFT_Hamming;
 
     @FXML
-    private RadioButton None;
+    private RadioButton FFT_Hann;
+
+    @FXML
+    private RadioButton FFT_Bartlett;
 
     // zmienne odpowedzialne za liczbe probek
     @FXML
@@ -74,21 +77,33 @@ public class STMCommunication {
 
     // USTAWIANIE PARAMETROW ALGORYTMOW
 
+
+
+
+    public void initialize(){
+        drawChart();
+    }
+
+
     @FXML
     public void setTypeOfAlgorithm(){
 
         try {
             if(stmPort != null){
-                if(FFT.isSelected()) {
-                    stmPort.writeString("FFT");
+                if(FFT_None.isSelected()) {
+                    stmPort.writeString("FFT_None");
                 }
 
                 if(FFT_Hamming.isSelected()) {
                     stmPort.writeString("FFT_Hamming");
                 }
 
-                if(None.isSelected()) {
-                    stmPort.writeString("None");
+                if(FFT_Hann.isSelected()) {
+                    stmPort.writeString("FFT_Hann");
+                }
+
+                if(FFT_Bartlett.isSelected()) {
+                    stmPort.writeString("FFT_Bartlett");
                 }
 
             }
@@ -98,6 +113,17 @@ public class STMCommunication {
         }
 
     }
+
+    @FXML
+    public void startCalculate(){
+        try {
+            stmPort.writeString("start");
+        }catch (SerialPortException ex) {
+            Logger.getLogger(Main.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+    }
+
 
     private static boolean isPowerOfTwo(int number) {
 
@@ -111,22 +137,26 @@ public class STMCommunication {
         return false;
     }
 
-
     @FXML
-    public void setAmountProbes(){
+    public void setAmountProbes() throws SerialPortException {
 
+        String amountProbesToSendString = amountProbes.getText().trim();
         int amountProbesToSend = Integer.parseInt(amountProbes.getText().trim());
 
+        String dataToSend = "";
+        for (int i = 0; i < 10-amountProbesToSendString.length(); ++i){
+            dataToSend += "0";
+        }
+
+        amountProbesToSendString = dataToSend + amountProbesToSendString;
         if(isPowerOfTwo(amountProbesToSend)){
             System.out.println("Lb probek: " + amountProbesToSend);
-
+            stmPort.writeString("[probes]" + amountProbesToSendString);
             amountProbesError.setText("");
         }
         else {
             amountProbesError.setText("Liczba musi byc potega 2 !!!");
         }
-
-
     }
 
 
@@ -156,7 +186,6 @@ public class STMCommunication {
                         disconnectSTM();
                         connectSTM(newValue);
                     }
-
                 });
     }
 
@@ -241,12 +270,10 @@ public class STMCommunication {
                             }
                         }
 
-
                     } catch (SerialPortException ex) {
                         Logger.getLogger(Main.class.getName())
                                 .log(Level.SEVERE, null, ex);
                     }
-
                 }
             });
 
@@ -305,11 +332,11 @@ public class STMCommunication {
 
     public void drawChart(){
         series = new XYChart.Series();
-        series.setName("A0 analog input");
+        series.setName("Analog value");
         lineChartTime.getData().add(series);
         lineChartTime.setAnimated(false);
-        xAxis.setLabel("Przyspieszenie");
-        yAxis.setLabel("Temperature [C]");
+        xAxis.setLabel("Probka [-]");
+        yAxis.setLabel("Przyspieszenie [m/s^2]");
 
         //pre-load with dummy data
         for(int i=0; i<NUM_OF_POINT; i++){

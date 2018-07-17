@@ -10,14 +10,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="511.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.STMCommunication">
+<BorderPane prefHeight="692.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.STMCommunication">
 
    <center>
 
-      <LineChart fx:id="lineChartTime" title="STM32 A0 Analog Input" BorderPane.alignment="CENTER">
+      <LineChart fx:id="lineChartTime" prefWidth="401.0" title="STM32 A0 Analog Input" BorderPane.alignment="CENTER">
          <xAxis>
             <NumberAxis side="BOTTOM" fx:id="xAxis" />
          </xAxis>
@@ -27,25 +29,8 @@
       </LineChart>
    </center>
    <left>
-      <VBox prefHeight="511.0" prefWidth="110.0" BorderPane.alignment="CENTER">
+      <VBox minWidth="150.0" style="-fx-alignment: center;" BorderPane.alignment="CENTER">
          <children>
-            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
-               <children>
-                  <Label fx:id="labelValue" text="Wykres">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Button mnemonicParsing="false" onAction="#drawChart" text="InitChart">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <opaqueInsets>
-                  <Insets top="20.0" />
-               </opaqueInsets>
-            </VBox>
             <VBox id="menu" prefHeight="154.0" prefWidth="77.0" stylesheets="@../css/menu.css">
                <children>
                   <Label stylesheets="@../css/menu.css" text="Komunikacja" />
@@ -54,7 +39,7 @@
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-            
+
                   <ComboBox fx:id="comboBoxPorts" prefWidth="150.0">
                      <opaqueInsets>
                         <Insets top="20.0" />
@@ -66,46 +51,39 @@
                   </Button>
                </children>
             </VBox>
-            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
-               <children>
-                  <Label text="STM" />
-                  <ToggleButton fx:id="diode" mnemonicParsing="false" onAction="#toggleDiode" text="Dioda" />
-               </children>
-               <opaqueInsets>
-                  <Insets top="20.0" />
-               </opaqueInsets>
-            </VBox>
-         </children>
-         <BorderPane.margin>
-            <Insets left="10.0" right="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </left>
-   <right>
-      <VBox minWidth="150.0" BorderPane.alignment="CENTER">
-         <children>
+            <ImageView fitHeight="39.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/strzalka.png" />
+               </image>
+            </ImageView>
             <VBox id="menu" prefHeight="170.0" prefWidth="100.0" stylesheets="@../css/menu.css">
                <children>
                   <Label text="Rodzaj algorytmu:" wrapText="true">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin></Label>
-                  <RadioButton fx:id="FFT" mnemonicParsing="false" selected="true" text="FFT">
+                  <RadioButton fx:id="FFT_None" mnemonicParsing="false" selected="true" text="FFT_None">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
                      <toggleGroup>
-                        <ToggleGroup fx:id="typeOfAlgorithm" />
+                        <ToggleGroup fx:id="typeOfFFT" />
                      </toggleGroup></RadioButton>
-                  <RadioButton fx:id="FFT_Hamming" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" text="FFT_Hamming" toggleGroup="$typeOfAlgorithm">
+                  <RadioButton fx:id="FFT_Hamming" layoutX="10.0" layoutY="27.0" mnemonicParsing="false" text="FFT_Hamming" toggleGroup="$typeOfFFT">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin></RadioButton>
-                  <RadioButton fx:id="None" layoutX="10.0" layoutY="44.0" mnemonicParsing="false" text="None" toggleGroup="$typeOfAlgorithm">
+                  <RadioButton fx:id="FFT_Hann" layoutX="37.0" layoutY="83.0" mnemonicParsing="false" text="FFT_Hann" toggleGroup="$typeOfFFT">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin></RadioButton>
-                  <Button fx:id="BtnTypeAlgorithm" mnemonicParsing="false" onAction="#setTypeOfAlgorithm" prefWidth="100.0" text="Set">
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="FFT_Bartlett" layoutX="37.0" layoutY="161.0" mnemonicParsing="false" text="FFT_Bartlett" toggleGroup="$typeOfFFT">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <Button mnemonicParsing="false" onAction="#setTypeOfAlgorithm" prefWidth="100.0" text="Set">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
@@ -115,6 +93,11 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </VBox>
+            <ImageView fitHeight="39.0" fitWidth="65.0" layoutX="10.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/strzalka.png" />
+               </image>
+            </ImageView>
             <VBox id="menu" prefHeight="131.0" prefWidth="100.0" stylesheets="@../css/menu.css">
                <children>
                   <Label text="Liczba probek">
@@ -141,7 +124,48 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </VBox>
+            <ImageView fitHeight="39.0" fitWidth="65.0" layoutX="10.0" layoutY="389.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/strzalka.png" />
+               </image>
+            </ImageView>
+            <VBox id="menu" prefHeight="96.0" prefWidth="125.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#startCalculate" text="START" />
+               </children>
+            </VBox>
          </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="511.0" prefWidth="110.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Label text="Aktualna wartosc:" />
+                  <Label fx:id="labelValue" text="Wykres">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+            </VBox>
+            <VBox id="menu" prefHeight="101.0" prefWidth="77.0" stylesheets="@../css/menu.css">
+               <children>
+                  <Label text="STM:" />
+                  <ToggleButton fx:id="diode" mnemonicParsing="false" onAction="#toggleDiode" text="Dioda" />
+               </children>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
       </VBox>
    </right>
 </BorderPane>
