@@ -2,6 +2,7 @@ package com.polchlopek.praca.magisterska.controller;
 
 import com.polchlopek.praca.magisterska.DAO.LoginDAO;
 import com.polchlopek.praca.magisterska.DAO.PersonDAO;
+import com.polchlopek.praca.magisterska.DTO.LoggedInUser;
 import com.polchlopek.praca.magisterska.entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -38,8 +39,6 @@ public class LoginPanel {
         window.setScene(mainWindowScene);
         window.show();
 
-
-
 //        PersonDAO personDAO = new PersonDAO();
 //        String login = loginTextField.getText().trim();
 //        String password = passwordField.getText().trim();
@@ -53,6 +52,7 @@ public class LoginPanel {
 //
 //            LoginDAO log = new LoginDAO();
 //            log.addLogin(user);
+//            LoggedInUser.getInstance().setLoggedInUSer(user);
 //
 //            Parent mainWindow = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
 //            Scene mainWindowScene = new Scene(mainWindow);

@@ -1,5 +1,6 @@
 package com.polchlopek.praca.magisterska.controller;
 
+import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromSTM;
 import com.polchlopek.praca.magisterska.config.Main;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -14,6 +15,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
@@ -59,6 +61,21 @@ public class STMCommunication {
     @FXML
     private RadioButton FFT_Bartlett;
 
+    @FXML
+    private RadioButton FFT_Gauss;
+
+    @FXML
+    private RadioButton FFT_Triangle;
+
+    @FXML
+    private RadioButton FFT_Nuttalla;
+
+    @FXML
+    private RadioButton FFT_BlackmanNuttalla;
+
+    @FXML
+    private RadioButton FFT_BlackmanHarrisa;
+
     // zmienne odpowedzialne za liczbe probek
     @FXML
     private TextField amountProbes;
@@ -66,6 +83,15 @@ public class STMCommunication {
     @FXML
     private Label amountProbesError;
 
+    // wybor algorytmu
+    @FXML
+    private RadioButton fftAlgorithm;
+
+    @FXML
+    private RadioButton falkowaAlgorithm;
+
+    @FXML
+    private GridPane allWindowType;
 
 
     private ObservableList<String> portList;
@@ -84,10 +110,12 @@ public class STMCommunication {
         drawChart();
     }
 
+    public void terminate(){
+        System.out.println("Wychodzimy z komunikacji");
+    }
 
     @FXML
-    public void setTypeOfAlgorithm(){
-
+    public void setTypeOfWindow(){
         try {
             if(stmPort != null){
                 if(FFT_None.isSelected()) {
@@ -106,10 +134,43 @@ public class STMCommunication {
                     stmPort.writeString("FFT_Bartlett");
                 }
 
+                if(FFT_Gauss.isSelected()) {
+                    stmPort.writeString("FFT_Gauss");
+                }
+
+                if(FFT_Triangle.isSelected()) {
+                    stmPort.writeString("FFT_Triangle");
+                }
+
+                if(FFT_Nuttalla.isSelected()) {
+                    stmPort.writeString("FFT_Nuttalla");
+                }
+
+                if(FFT_BlackmanHarrisa.isSelected()) {
+                    stmPort.writeString("FFT_BlackmanHarrisa");
+                }
+
+                if(FFT_BlackmanNuttalla.isSelected()) {
+                    stmPort.writeString("FFT_BlackmanNuttalla");
+                }
+
             }
         }catch (SerialPortException ex) {
             Logger.getLogger(Main.class.getName())
                     .log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    public void setTypeOfAlgorithm(){
+
+        if(fftAlgorithm.isSelected()){
+            System.out.println("FFT selected");
+            allWindowType.disableProperty().setValue(false);
+        }
+        else if(falkowaAlgorithm.isSelected()){
+            System.out.println("falkowa selected");
+            allWindowType.disableProperty().setValue(true);
         }
 
     }
@@ -216,8 +277,11 @@ public class STMCommunication {
     private boolean connectSTM(String port){
 
         boolean success = false;
+        AtomicBoolean collectData = new AtomicBoolean(false);
+
         SerialPort serialPort = new SerialPort(port);
         AtomicBoolean sendingResult = new AtomicBoolean(false);
+
 
         try {
             serialPort.openPort();
@@ -241,10 +305,13 @@ public class STMCommunication {
 
                             if (message.contains("wysylanieWyniku:START")){
                                 sendingResult.set(true);
+                                collectData.set(true);
+                                ReceivedDataFromSTM.getInstance().clearArray();
                             }
 
                             if (message.contains("wysylanieWyniku:STOP")){
                                 sendingResult.set(false);
+                                collectData.set(false);
                             }
 
                             System.out.println("*********************************************");
@@ -255,6 +322,11 @@ public class STMCommunication {
                             try {
                                 float sendedValue = Float.parseFloat(message);
 
+                                if(collectData.get()){
+                                    ReceivedDataFromSTM.getInstance().addData(sendedValue);
+                                }
+
+                                System.out.println("Aktualan lisat: " + ReceivedDataFromSTM.getInstance().getList());
                                 //Update label in ui thread
                                 Platform.runLater(() -> {
                                     labelValue.setText(st);

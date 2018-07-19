@@ -64,6 +64,16 @@ public class MeasurementDAO {
         }
     }
 
+    public void addMeasurement(Measurement measurement){
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.beginTransaction();
 
+        try{
+            currentSession.saveOrUpdate(measurement);
+        }
+        finally {
+            currentSession.getTransaction().commit();
+        }
+    }
 
 }

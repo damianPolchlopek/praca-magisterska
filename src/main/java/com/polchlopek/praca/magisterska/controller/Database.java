@@ -1,14 +1,14 @@
 package com.polchlopek.praca.magisterska.controller;
 
 import com.polchlopek.praca.magisterska.DAO.LoginDAO;
+import com.polchlopek.praca.magisterska.DAO.MeasurementCategoryDAO;
 import com.polchlopek.praca.magisterska.DAO.MeasurementDAO;
 import com.polchlopek.praca.magisterska.DAO.PersonDAO;
+import com.polchlopek.praca.magisterska.DTO.LoggedInUser;
 import com.polchlopek.praca.magisterska.DTO.LoginToTable;
 import com.polchlopek.praca.magisterska.DTO.MeasurementToTable;
-import com.polchlopek.praca.magisterska.entity.Login;
-import com.polchlopek.praca.magisterska.entity.Measurement;
-import com.polchlopek.praca.magisterska.entity.MeasurementCategory;
-import com.polchlopek.praca.magisterska.entity.User;
+import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromSTM;
+import com.polchlopek.praca.magisterska.entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -124,10 +124,27 @@ public class Database {
     private MenuItem loginDeleteMenuItem;
 
 
+
     @FXML
     private BorderPane mainPanel;
 
 
+    // DODAWANIE POMIARU
+    @FXML
+    private TextField descriptionMeasurementToAdd;
+
+    @FXML
+    private ComboBox measCategoryInMeasToAdd;
+
+    // DODANIE KATEOGRII POMIARU
+    @FXML
+    private TextField descriptionMeasurementCategoryToAdd;
+
+    @FXML
+    private TextField axisXMeasurementCategoryToAdd;
+
+    @FXML
+    private TextField axisYMeasurementCategoryToAdd;
 
     public void initialize(){
 
@@ -153,8 +170,67 @@ public class Database {
             logDAO.deleteLogin(login);
             initLoginTab();
         });
+
+        // wyswietlanie measurement category w zakaldce
+        // odpowiedzialnej za dodawnie pomiarow
+        List<String> measurementCategories = new MeasurementCategoryDAO().getMeasurementCategories();
+        ObservableList<String> measCategory = FXCollections.observableArrayList(measurementCategories);
+        measCategoryInMeasToAdd.setItems(measCategory);
+        measCategoryInMeasToAdd.getSelectionModel().selectFirst();
+
     }
 
+
+    @FXML
+    public void addMeasurementCategoryToDatabase(){
+
+        String description = descriptionMeasurementCategoryToAdd.getText().trim();
+        String axisX = axisXMeasurementCategoryToAdd.getText().trim();
+        String axisY = axisYMeasurementCategoryToAdd.getText().trim();
+
+        MeasurementCategory measurementCategory = new MeasurementCategory(description, axisX, axisY);
+        MeasurementCategoryDAO measurementCategoryDAO = new MeasurementCategoryDAO();
+        measurementCategoryDAO.addMeasurementCategory(measurementCategory);
+
+    }
+
+    @FXML
+    public void addMeasurementToDatabase(){
+
+        String description = descriptionMeasurementToAdd.getText().trim();
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date date = new java.sql.Date(utilDate.getTime());
+
+        MeasurementCategoryDAO measurementCategoryDAO = new MeasurementCategoryDAO();
+        //MeasurementCategory measurementCategory = measurementCategoryDAO.getMeasurementCategory("Temperatura");
+        String measCat = (String) measCategoryInMeasToAdd.getValue();
+        MeasurementCategory measurementCategory = measurementCategoryDAO.getMeasurementCategory(measCat);
+
+        System.out.println("Dodanie pomiaru do bazy danych");
+        System.out.println("Meas category: " + measurementCategory);
+
+        PersonDAO personDAO = new PersonDAO();
+        User user = personDAO.getPerson("damian");
+
+        // TODO: ODKOMENTOWAC GDY BEDZIe GOTOWA APLIKACJA
+//        User user = LoggedInUser.getInstance().getLoggedInUSer();
+
+        //mrasurement data
+        List<MeasurementData> listMeasurementData = new ArrayList<>();
+        for (int i = 0; i < ReceivedDataFromSTM.getInstance().getList().size(); ++i) {
+            listMeasurementData.add(new MeasurementData(i,
+                    ReceivedDataFromSTM.getInstance().getList().get(i)));
+        }
+
+        System.out.println("list: " + listMeasurementData);
+
+        Measurement measurement = new Measurement(date, description, measurementCategory,
+                                                        user, listMeasurementData);
+
+        MeasurementDAO measurementDAO = new MeasurementDAO();
+        measurementDAO.addMeasurement(measurement);
+
+    }
 
     @FXML
     public void updateUserMenuItem(){
