@@ -221,8 +221,6 @@ public class STMCommunication {
     }
 
 
-
-
     // METODY ODPOWIEDZIALNE ZA KOMMUNIKACJE
 
     @FXML
@@ -417,36 +415,4 @@ public class STMCommunication {
 
     }
 
-    class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(int value) {
-            setPrefSize(15, 15);
-
-            final Label label = createDataThresholdLabel(value);
-
-            setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    getChildren().setAll(label);
-                    setCursor(Cursor.NONE);
-                    toFront();
-                }
-            });
-            setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    getChildren().clear();
-                    setCursor(Cursor.CROSSHAIR);
-                }
-            });
-        }
-
-        private Label createDataThresholdLabel(int value) {
-            final Label label = new Label(value + "");
-            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
-            label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
-            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
-            return label;
-        }
-
-    }
 }

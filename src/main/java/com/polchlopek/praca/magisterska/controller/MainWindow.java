@@ -29,11 +29,11 @@ public class MainWindow {
         mainBorderPane.setCenter(root_time);
     }
 
-    @FXML
-    public void showFrequenceGraph() throws IOException {
-        Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
-        mainBorderPane.setCenter(root_freq);
-    }
+//    @FXML
+//    public void showFrequenceGraph() throws IOException {
+//        Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
+//        mainBorderPane.setCenter(root_freq);
+//    }
 
     @FXML
     public void showNotes() throws IOException {

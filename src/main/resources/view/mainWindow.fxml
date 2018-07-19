@@ -60,15 +60,7 @@
             <Label id="menuLabel" text="Menu" />
             <ImageView fitHeight="100.0" fitWidth="150.0" onMouseClicked="#showTimeGraph" pickOnBounds="true">
                <image>
-                  <Image url="/image/dziedzina_czasu.png" />
-               </image>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ImageView>
-            <ImageView fitHeight="100.0" fitWidth="150.0" onMouseClicked="#showFrequenceGraph" pickOnBounds="true">
-               <image>
-                  <Image url="/image/dziedzina_czest.png" />
+                  <Image url="/image/wykresy.png" />
                </image>
                <VBox.margin>
                   <Insets />

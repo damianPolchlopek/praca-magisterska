@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="500.0" prefWidth="700.0"
-            stylesheets="@/css/centerTime.css" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.polchlopek.praca.magisterska.controller.TimeChart">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" stylesheets="@/css/centerTime.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.Graphs">
    <center>
-      <LineChart fx:id="lineChartTime" title="Time Graph" BorderPane.alignment="CENTER">
-        <xAxis>
-          <NumberAxis side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
-        </yAxis>
-      </LineChart>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Line Graph">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <LineChart fx:id="lineChartTime" title="Time Graph" BorderPane.alignment="CENTER">
+                          <xAxis>
+                            <NumberAxis side="BOTTOM" fx:id="xAxis" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis fx:id="yAxis" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </center>
+                  </BorderPane>
+               </content>
+          </Tab>
+          <Tab text="Bar Graph">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <BarChart fx:id="barChartFrequence" title="Frequence Graph" BorderPane.alignment="CENTER">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" fx:id="xAxisBarGraph" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis fx:id="yAxisBarGraph" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                     </center></BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </center>
 
 </BorderPane>

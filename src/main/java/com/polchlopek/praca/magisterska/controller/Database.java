@@ -4,7 +4,6 @@ import com.polchlopek.praca.magisterska.DAO.LoginDAO;
 import com.polchlopek.praca.magisterska.DAO.MeasurementCategoryDAO;
 import com.polchlopek.praca.magisterska.DAO.MeasurementDAO;
 import com.polchlopek.praca.magisterska.DAO.PersonDAO;
-import com.polchlopek.praca.magisterska.DTO.LoggedInUser;
 import com.polchlopek.praca.magisterska.DTO.LoginToTable;
 import com.polchlopek.praca.magisterska.DTO.MeasurementToTable;
 import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromSTM;
@@ -45,9 +44,6 @@ public class Database {
     @FXML
     private TableColumn<MeasurementCategory, String> categoryCol;
 
-    @FXML
-    private Button btnSearch;
-
 
     // TABELA WYSWIETLAJACA UZYTKOWNIKOW
     @FXML
@@ -84,10 +80,6 @@ public class Database {
 
     @FXML
     private TableColumn<String, String> locationLoginCol;
-
-    private List<MeasurementToTable> measurementsDB;
-    private List<LoginToTable> loginsDB;
-    private List<User> users;
 
 
     // DODAWANIE NOWEGO UZYTKOWNIKA
@@ -268,7 +260,7 @@ public class Database {
 
         MeasurementDAO meas = new MeasurementDAO();
         List<Measurement> measurements = meas.getMeasurements();
-        measurementsDB = new ArrayList<>();
+        List<MeasurementToTable> measurementsDB = new ArrayList<>();
 
         for (Measurement measurement :
                 measurements) {
@@ -287,7 +279,7 @@ public class Database {
     @FXML
     private void initUserTab(){
         PersonDAO per = new PersonDAO();
-        users = per.getPeople();
+        List<User> users = per.getPeople();
 
         ObservableList<User> obserList = FXCollections.observableArrayList(users);
         firstNameUserCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -302,7 +294,7 @@ public class Database {
 
         LoginDAO log = new LoginDAO();
         List<Login> logins = log.getLogins();
-        loginsDB = new ArrayList<>();
+        List<LoginToTable> loginsDB = new ArrayList<>();
 
         for (Login login : logins) {
             loginsDB.add(new LoginToTable(login));
@@ -329,7 +321,6 @@ public class Database {
 
         // dorobic sprawdzanie poprawsci danych
         // np. czy 2 wprowadzone hasla sie zgadzaja
-
 
         User userToAdd = new User(username, firstName, lastName, email, password, phone);
         PersonDAO per = new PersonDAO();

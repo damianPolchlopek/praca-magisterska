@@ -6,9 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -16,8 +14,10 @@ import javafx.scene.layout.StackPane;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeChart {
+public class Graphs {
 
+
+    // TIME GRAPH
     @FXML
     private LineChart<Number, Number> lineChartTime;
 
@@ -27,12 +27,24 @@ public class TimeChart {
     @FXML
     private NumberAxis yAxis;
 
+    // FREQUENCE GRAPH
+    @FXML
+    private BarChart<Number, Number> barChartFrequence;
+
+    @FXML
+    private CategoryAxis xAxisBarGraph;
+
+    @FXML
+    private NumberAxis yAxisBarGraph;
+
 
     public void initialize() {
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // TIME GRAPH
+
         xAxis.setLabel("Time [s]");
         yAxis.setLabel("Temperature [C]");
-
-        System.out.println("Inicjalizacja wykresu !!!");
 
         //defining a series
         XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>("Measurement 1",
@@ -42,6 +54,24 @@ public class TimeChart {
         );
 
         lineChartTime.getData().addAll(series);
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+        // FREQUENCE GRAPH
+
+        xAxisBarGraph.setLabel("Frequnce [Hz]");
+        yAxisBarGraph.setLabel("Magnitude [-]");
+
+        XYChart.Series seriesFreq = new XYChart.Series("Measurement 1",
+                FXCollections.observableArrayList(
+                        plotFreq(ReceivedDataFromSTM.getInstance().getList())
+                )
+        );
+
+        barChartFrequence.getData().addAll(seriesFreq);
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+
 
     }
 
@@ -60,9 +90,20 @@ public class TimeChart {
     }
 
 
-    /**
-     * a node which displays a value on hover, but is otherwise empty
-     */
+    public ObservableList<XYChart.Data<String, Number>> plotFreq(ArrayList<Float> y) {
+        ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
+
+        for(int i=0; i<y.size(); ++i){
+            final XYChart.Data<String, Number> data = new XYChart.Data<>(Integer.toString(i + 1), y.get(i));
+            data.setNode(
+                    new HoveredThresholdNode(y.get(i))
+            );
+            dataset.add(data);
+        }
+
+        return dataset;
+    }
+
 
     class HoveredThresholdNode extends StackPane {
         HoveredThresholdNode(float value) {
@@ -78,6 +119,7 @@ public class TimeChart {
                     toFront();
                 }
             });
+
             setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
