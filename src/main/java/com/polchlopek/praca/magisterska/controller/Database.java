@@ -115,11 +115,8 @@ public class Database {
     @FXML
     private MenuItem loginDeleteMenuItem;
 
-
-
     @FXML
     private BorderPane mainPanel;
-
 
     // DODAWANIE POMIARU
     @FXML

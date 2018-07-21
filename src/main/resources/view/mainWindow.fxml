@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0" stylesheets="/css/mainWindow.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.MainWindow">
+<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: white;" stylesheets="/css/mainWindow.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polchlopek.praca.magisterska.controller.MainWindow">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -27,30 +27,26 @@
                         <MenuItem mnemonicParsing="false" onAction="#openDiagrams" text="Open" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Time Signal">
+                <Menu mnemonicParsing="false" text="Graph">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#showAboutTimeDialog" text="About" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#showHelpTimeDialog" text="Help" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Frequence Signal">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showAboutFrequenceDialog" text="About" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Note">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#showAboutNoteDialog" text="About" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="Communication">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#showHelpDialog" text="Help" />
+                        <MenuItem mnemonicParsing="false" onAction="#showCommunicationDialog" text="About" />
                     </items>
                 </Menu>
+            <Menu mnemonicParsing="false" text="Database">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showDatabaseDialog" text="About" />
+               </items>
+            </Menu>
             </menus>
         </MenuBar>
     </top>

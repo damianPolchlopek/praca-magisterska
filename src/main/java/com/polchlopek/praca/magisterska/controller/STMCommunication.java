@@ -62,9 +62,6 @@ public class STMCommunication {
     private RadioButton FFT_Bartlett;
 
     @FXML
-    private RadioButton FFT_Gauss;
-
-    @FXML
     private RadioButton FFT_Triangle;
 
     @FXML
@@ -118,6 +115,7 @@ public class STMCommunication {
     public void setTypeOfWindow(){
         try {
             if(stmPort != null){
+
                 if(FFT_None.isSelected()) {
                     stmPort.writeString("FFT_None");
                 }
@@ -132,10 +130,6 @@ public class STMCommunication {
 
                 if(FFT_Bartlett.isSelected()) {
                     stmPort.writeString("FFT_Bartlett");
-                }
-
-                if(FFT_Gauss.isSelected()) {
-                    stmPort.writeString("FFT_Gauss");
                 }
 
                 if(FFT_Triangle.isSelected()) {

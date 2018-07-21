@@ -99,11 +99,10 @@
                         <RadioButton fx:id="FFT_None" mnemonicParsing="false" onAction="#setTypeOfWindow" selected="true" text="None" toggleGroup="$typeOfFFT" />
                         <RadioButton fx:id="FFT_Hamming" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Hamming" toggleGroup="$typeOfFFT" GridPane.rowIndex="2" />
                         <RadioButton fx:id="FFT_Hann" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Hann" toggleGroup="$typeOfFFT" GridPane.rowIndex="3" />
-                        <RadioButton fx:id="FFT_Gauss" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Gauss" toggleGroup="$typeOfFFT" GridPane.columnIndex="1" />
                         <RadioButton fx:id="FFT_Triangle" layoutX="92.0" layoutY="13.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Triangle" toggleGroup="$typeOfFFT" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <RadioButton fx:id="FFT_Nuttalla" layoutX="92.0" layoutY="36.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Nutalla" toggleGroup="$typeOfFFT" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <RadioButton fx:id="FFT_BlackmanHarrisa" layoutX="92.0" layoutY="59.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Blackman-Harrisa" toggleGroup="$typeOfFFT" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <RadioButton fx:id="FFT_BlackmanNuttalla" layoutX="92.0" layoutY="82.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Blackman-Nuttalla" toggleGroup="$typeOfFFT" GridPane.rowIndex="4" />
+                        <RadioButton fx:id="FFT_BlackmanNuttalla" layoutX="92.0" layoutY="82.0" mnemonicParsing="false" onAction="#setTypeOfWindow" text="Blackman-Nuttalla" toggleGroup="$typeOfFFT" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>

@@ -8,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
@@ -28,12 +27,6 @@ public class MainWindow {
         Node root_time = FXMLLoader.load(getClass().getResource("/view/centerTime.fxml"));
         mainBorderPane.setCenter(root_time);
     }
-
-//    @FXML
-//    public void showFrequenceGraph() throws IOException {
-//        Node root_freq = FXMLLoader.load(getClass().getResource("/view/centerFrequence.fxml"));
-//        mainBorderPane.setCenter(root_freq);
-//    }
 
     @FXML
     public void showNotes() throws IOException {
@@ -127,20 +120,10 @@ public class MainWindow {
     }
 
     @FXML
-    public void showHelpTimeDialog(){
-        System.out.println("Help Time");
-    }
-
-    @FXML
-    public void showHelpDialog(){
-        System.out.println("Help Dialog");
-    }
-
-    @FXML
     public void showAboutTimeDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Help Time Signal");
+        dialog.setTitle("Help Signal");
         dialog.setHeaderText("In this window you can see all important information about signal");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
@@ -149,16 +132,18 @@ public class MainWindow {
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
-        helpController.setHelpLabel("Pomoc okienkowa na temat pomiarow !!!!");
+        helpController.setHelpLabel("W aplikacji zostały dodane dwa typy wykresów: liniowy i słupkowy. \n" +
+                "Po zmianie odpowiedzniej zakładki w widoku odpowiedzialnym a wyświetlanie wykresów \n" +
+                "ukazują się wykresy wyświetlające ostatnio otrzymane pomiary z mikrokontrolera.");
         dialog.showAndWait();
     }
 
     @FXML
-    public void showAboutFrequenceDialog(){
+    public void showDatabaseDialog(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
-        dialog.setTitle("Help Frequence Signal");
-        dialog.setHeaderText("In this window you can see all important information about signal");
+        dialog.setTitle("Help Database");
+        dialog.setHeaderText("In this window you can see all important information about database");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
 
@@ -166,9 +151,37 @@ public class MainWindow {
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
-        helpController.setHelpLabel("Frequence !!!!!!");
+        helpController.setHelpLabel("Za pomocą bazy danych użytkownik może zarządzać wybranymi przez siebie pomiarami. \n" +
+                "------------------------------------------------------------------------------- \n" +
+                "Dostępne operacje na bazie danych to: \n" +
+                "1. Wyświetlanie i usuwanie danych o zarejestrowanych użytkownikach. \n" +
+                "2. Wyświetlanie danych o logowaniach uzytkowników do aplikacji. \n" +
+                "3. Wyświetlanie, dodawanie i usuwanie pomiarow. \n" +
+                "4. Wyświetlanie, dodawnaie i usuwanie kategorii pomiarow. \n");
         dialog.showAndWait();
     }
+
+    @FXML
+    public void showCommunicationDialog(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        dialog.setTitle("Help Communication");
+        dialog.setHeaderText("In this window you can see all important information about communication between apllication and STM32");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/view/helpDialog.fxml"));
+
+        if (loadContentToScreen(dialog, fxmlLoader)) return;
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Help helpController = fxmlLoader.getController();
+        helpController.setHelpLabel("W widoku odpowiezialnym za kommunikacje z mikrokontrolerem mamy możliwość: \n" +
+                "1. Kommunikacji z mikro kontrolerem. \n" +
+                "2. Wybrania algorytmu, jaki chcemy użyć do przetworzenia, zmierzonego sygnału. \n" +
+                "3. Ustawienia liczby próbek jakie chcemy zmierzyć. \n" +
+                "4. Rozpoczęcia sekwencji pomiarowej.");
+        dialog.showAndWait();
+    }
+
 
     @FXML
     public void showAboutNoteDialog(){
@@ -183,7 +196,7 @@ public class MainWindow {
 
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         Help helpController = fxmlLoader.getController();
-        helpController.setHelpLabel("Pomoc okienkowa na temat dodawania notatek !!!!");
+        helpController.setHelpLabel("W aplikacji jest możliwość dodawania, edytowania i usuwania notatek.");
         dialog.showAndWait();
     }
 
