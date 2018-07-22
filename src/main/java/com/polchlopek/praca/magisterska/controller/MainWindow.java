@@ -1,8 +1,10 @@
 package com.polchlopek.praca.magisterska.controller;
 
 import com.polchlopek.praca.magisterska.DAO.MeasurementCategoryDAO;
+import com.polchlopek.praca.magisterska.DTO.DescriptionFile;
 import com.polchlopek.praca.magisterska.DTO.LoggedInUser;
 import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromFile;
+import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromSTM;
 import com.polchlopek.praca.magisterska.config.Main;
 import com.polchlopek.praca.magisterska.entity.Measurement;
 import com.polchlopek.praca.magisterska.entity.MeasurementCategory;
@@ -15,11 +17,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.sql.Date;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +32,8 @@ public class MainWindow {
 
     @FXML
     private BorderPane mainBorderPane;
+
+
 
 
     @FXML
@@ -61,34 +67,72 @@ public class MainWindow {
     }
 
     @FXML
-    public void saveDiagrams() {
+    public void saveDataFromStmToFile() {
         System.out.println("Zapisuje");
+
+        // wyswietlenie okna zbierajacego dane od uzytkownika o pomiarze
+        getDataToSaveFile();
+
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Signal");
+        fileChooser.setTitle("Save signal from STM");
 
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All File", "*.*"),
-                new FileChooser.ExtensionFilter("txt", "*.txt")
+                new FileChooser.ExtensionFilter("*.txt", "*.txt"),
+                new FileChooser.ExtensionFilter("All File", "*.*")
         );
 
         File file = fileChooser.showSaveDialog(mainBorderPane.getScene().getWindow());
 
+        String contentFile = "";
         if(file != null){
             try {
-                saveFile("123456", file);
+
+                contentFile += "Description: " + DescriptionFile.getInstance().getDescription() + "\n";
+                contentFile += "Category: " + DescriptionFile.getInstance().getCategory() + "\n";
+                contentFile += "Description axis x: " + DescriptionFile.getInstance().getAxisX() + "\n";
+                contentFile += "Description axis y: " + DescriptionFile.getInstance().getAxisY() + "\n";
+                contentFile += "Data: \n";
+
+                Float value;
+                for (int i = 0; i < ReceivedDataFromSTM.getInstance().getList().size(); ++i){
+                    value = ReceivedDataFromSTM.getInstance().getList().get(i);
+                    contentFile += Integer.toString(i) + ", " + value.toString() + " \n";
+                }
+
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write(contentFile);
+                fileWriter.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public void saveFile(String content, File file) throws IOException {
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(content);
-        fileWriter.close();
 
-        System.out.println("Metoda zapisujaca plik !!!");
+    public void getDataToSaveFile(){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(mainBorderPane.getScene().getWindow());
+        dialog.setTitle("Description File");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/view/dataToFile.fxml"));
+
+        try{
+            dialog.getDialogPane().setContent(fxmlLoader.load());
+        } catch (IOException e){
+            System.out.println("Couldn't load the dialog");
+            e.printStackTrace();
+        }
+
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+        DataToFile descriptionFileController = fxmlLoader.getController();
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            descriptionFileController.saveData();
+        }
 
     }
 

@@ -40,7 +40,6 @@ public class Notes {
     @FXML
     private ContextMenu listContextMenu;
 
-
     // sortowanie list View
     SortedList<NoteItem> sortedList = new SortedList<NoteItem>(NoteData.getInstance().getNoteItems(),
             new Comparator<NoteItem>() {
@@ -49,8 +48,6 @@ public class Notes {
                     return o1.getDeadline().compareTo(o2.getDeadline());
                 }
             });
-
-
 
     public void initialize(){
 
