@@ -6,6 +6,7 @@ import com.polchlopek.praca.magisterska.DAO.MeasurementDAO;
 import com.polchlopek.praca.magisterska.DAO.PersonDAO;
 import com.polchlopek.praca.magisterska.DTO.LoginToTable;
 import com.polchlopek.praca.magisterska.DTO.MeasurementToTable;
+import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromFile;
 import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromSTM;
 import com.polchlopek.praca.magisterska.entity.*;
 import javafx.collections.FXCollections;
@@ -184,6 +185,13 @@ public class Database {
     }
 
     @FXML
+    public void addMeasurementFromFileToDatabase(){
+        Measurement measurement = ReceivedDataFromFile.getInstance().getMeasurement();
+        MeasurementDAO measurementDAO = new MeasurementDAO();
+        measurementDAO.addMeasurement(measurement);
+    }
+
+    @FXML
     public void addMeasurementToDatabase(){
 
         String description = descriptionMeasurementToAdd.getText().trim();
@@ -191,7 +199,6 @@ public class Database {
         java.sql.Date date = new java.sql.Date(utilDate.getTime());
 
         MeasurementCategoryDAO measurementCategoryDAO = new MeasurementCategoryDAO();
-        //MeasurementCategory measurementCategory = measurementCategoryDAO.getMeasurementCategory("Temperatura");
         String measCat = (String) measCategoryInMeasToAdd.getValue();
         MeasurementCategory measurementCategory = measurementCategoryDAO.getMeasurementCategory(measCat);
 
@@ -258,6 +265,8 @@ public class Database {
         MeasurementDAO meas = new MeasurementDAO();
         List<Measurement> measurements = meas.getMeasurements();
         List<MeasurementToTable> measurementsDB = new ArrayList<>();
+
+        System.out.println("Meas: " + measurements);
 
         for (Measurement measurement :
                 measurements) {

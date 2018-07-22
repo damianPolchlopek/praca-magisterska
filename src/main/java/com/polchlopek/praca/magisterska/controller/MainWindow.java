@@ -1,6 +1,13 @@
 package com.polchlopek.praca.magisterska.controller;
 
+import com.polchlopek.praca.magisterska.DAO.MeasurementCategoryDAO;
+import com.polchlopek.praca.magisterska.DTO.LoggedInUser;
+import com.polchlopek.praca.magisterska.DTO.ReceivedDataFromFile;
 import com.polchlopek.praca.magisterska.config.Main;
+import com.polchlopek.praca.magisterska.entity.Measurement;
+import com.polchlopek.praca.magisterska.entity.MeasurementCategory;
+import com.polchlopek.praca.magisterska.entity.MeasurementData;
+import com.polchlopek.praca.magisterska.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +32,7 @@ public class MainWindow {
 
     @FXML
     public void showTimeGraph() throws IOException {
-        Node root_time = FXMLLoader.load(getClass().getResource("/view/centerTime.fxml"));
+        Node root_time = FXMLLoader.load(getClass().getResource("/view/Graphs.fxml"));
         mainBorderPane.setCenter(root_time);
     }
 
@@ -79,6 +87,9 @@ public class MainWindow {
         FileWriter fileWriter = new FileWriter(file);
         fileWriter.write(content);
         fileWriter.close();
+
+        System.out.println("Metoda zapisujaca plik !!!");
+
     }
 
     @FXML
@@ -103,20 +114,75 @@ public class MainWindow {
     }
 
     public void openFile(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
 
-        String line;
-        String regex = "(\\d+) (\\d+)";
-        Matcher allNumber;
-        Pattern p = Pattern.compile(regex);
+        FileInputStream fis = new FileInputStream(file);
+        byte[] dataFromFile = new byte[(int) file.length()];
+        fis.read(dataFromFile);
+        fis.close();
+        String contentFile = new String(dataFromFile, "UTF-8");
 
-        while ((line = reader.readLine()) != null) {
-            allNumber = p.matcher(line);
-            if (allNumber.find()){
-                System.out.print("czas: " + allNumber.group(1));
-                System.out.println(", amplit: " + allNumber.group(2));
+        final String description_pattern = "Description: ([\\w|\\W]+)" +
+                "Category: ([\\w|\\W]+)" +
+                "Description axis x: ([\\w|\\W]+)" +
+                "Description axis y: ([\\w|\\W]+)" +
+                "Data:([\\w|\\W]+)";
+
+        final String data_pattern = "(-?\\d*.?\\d+), (-?\\d*.?\\d+)";
+
+        Pattern r = Pattern.compile(description_pattern);
+        Matcher m = r.matcher(contentFile);
+
+        String description;
+        String category;
+        String descriptionAxisX;
+        String descriptionAxisY;
+        String data;
+
+        if (m.find()){
+            try{
+                description = m.group(1).trim();
+                category = m.group(2).trim();
+                descriptionAxisX = m.group(3).trim();
+                descriptionAxisY = m.group(4).trim();
+                data = m.group(5);
+            }
+            catch(Exception e){
+                System.out.println("Blad podczas parsowania pliku !!!");
+                return;
             }
         }
+        else {
+            System.out.println("Zly format pliku !!!");
+            return;
+        }
+
+        java.util.Date utilDate = new java.util.Date();
+        Date sqlDate = new Date(utilDate.getTime());
+        Measurement measurementToAdd = new Measurement(sqlDate, description);
+
+        Pattern rData = Pattern.compile(data_pattern);
+        Matcher mData = rData.matcher(data);
+
+        // dodanie wektora danych
+        while (mData.find()) {
+            System.out.println(mData.group(1) + ", " + mData.group(2));
+            measurementToAdd.addNode(new MeasurementData(Float.parseFloat(mData.group(1)),
+                    Float.parseFloat(mData.group(2))));
+        }
+
+        MeasurementCategoryDAO measurementCategoryDAO = new MeasurementCategoryDAO();
+        MeasurementCategory measurementCategory = measurementCategoryDAO.getMeasurementCategory(category);
+        if (measurementCategory == null) {
+            measurementCategory = new MeasurementCategory(category,
+                    descriptionAxisX, descriptionAxisY);
+        }
+        measurementToAdd.setCategory(measurementCategory);
+
+        // ustawienie osoby
+        User person = LoggedInUser.getInstance().getLoggedInUSer();
+        measurementToAdd.setUserID(person);
+
+        ReceivedDataFromFile.getInstance().setMeasurement(measurementToAdd);
     }
 
     @FXML

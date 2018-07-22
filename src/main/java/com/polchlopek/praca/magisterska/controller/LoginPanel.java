@@ -39,6 +39,11 @@ public class LoginPanel {
         window.setScene(mainWindowScene);
         window.show();
 
+        String login = loginTextField.getText().trim();
+        PersonDAO personDAO = new PersonDAO();
+        User user = personDAO.getPerson("damian");
+        LoggedInUser.getInstance().setLoggedInUSer(user);
+
 //        PersonDAO personDAO = new PersonDAO();
 //        String login = loginTextField.getText().trim();
 //        String password = passwordField.getText().trim();
