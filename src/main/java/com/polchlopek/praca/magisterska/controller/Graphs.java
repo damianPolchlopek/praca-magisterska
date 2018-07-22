@@ -88,7 +88,6 @@ public class Graphs {
     @FXML
     public void loadMeasurementFromFile(){
 
-
         //////////////////////////////////////////////////////////////////////////////////////////
         // TIME GRAPH
 
@@ -130,7 +129,7 @@ public class Graphs {
 
     //////////////////////////////////////////////////////////////////////////////////////////
     // METODA PLOT - PRZYPADEK ARGUMENTU MEASUREMENTDATA
-    public ObservableList<XYChart.Data<Number, Number>> plot(List<MeasurementData> y) {
+    private ObservableList<XYChart.Data<Number, Number>> plot(List<MeasurementData> y) {
         ObservableList<XYChart.Data<Number, Number>> dataset = FXCollections.observableArrayList();
 
         for(int i=0; i<y.size(); ++i){
@@ -144,7 +143,7 @@ public class Graphs {
         return dataset;
     }
 
-    public ObservableList<XYChart.Data<String, Number>> plotFreq(List<MeasurementData> y) {
+    private ObservableList<XYChart.Data<String, Number>> plotFreq(List<MeasurementData> y) {
         ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
 
         for(int i=0; i<y.size(); ++i){
@@ -160,7 +159,7 @@ public class Graphs {
 
     //////////////////////////////////////////////////////////////////////////////////////////
     // METODA PLOT - PRZYPADEK ARGUMENTU FLOAT
-    public ObservableList<XYChart.Data<Number, Number>> plot(ArrayList<Float> y) {
+    private ObservableList<XYChart.Data<Number, Number>> plot(ArrayList<Float> y) {
         ObservableList<XYChart.Data<Number, Number>> dataset = FXCollections.observableArrayList();
 
         for(int i=0; i<y.size(); ++i){
@@ -175,7 +174,7 @@ public class Graphs {
     }
 
 
-    public ObservableList<XYChart.Data<String, Number>> plotFreq(ArrayList<Float> y) {
+    private ObservableList<XYChart.Data<String, Number>> plotFreq(ArrayList<Float> y) {
         ObservableList<XYChart.Data<String, Number>> dataset = FXCollections.observableArrayList();
 
         for(int i=0; i<y.size(); ++i){

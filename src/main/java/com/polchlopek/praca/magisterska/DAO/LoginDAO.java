@@ -1,15 +1,11 @@
 package com.polchlopek.praca.magisterska.DAO;
 
 import com.polchlopek.praca.magisterska.entity.Login;
-import com.polchlopek.praca.magisterska.entity.Measurement;
 import com.polchlopek.praca.magisterska.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -22,14 +18,14 @@ public class LoginDAO {
     }
 
 
-    public List<Login> getLogins() {
+    public List getLogins() {
 
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.beginTransaction();
 
         try{
 
-            Query<Login> theQuery =
+            Query theQuery =
                     currentSession.createQuery("FROM Login log order by log.id desc");
             theQuery.setFirstResult(0);
             theQuery.setMaxResults(10);

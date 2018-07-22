@@ -17,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 
@@ -38,7 +37,7 @@ public class MainWindow {
 
     @FXML
     public void showTimeGraph() throws IOException {
-        Node root_time = FXMLLoader.load(getClass().getResource("/view/Graphs.fxml"));
+        Node root_time = FXMLLoader.load(getClass().getResource("/view/graphs.fxml"));
         mainBorderPane.setCenter(root_time);
     }
 
@@ -83,24 +82,24 @@ public class MainWindow {
 
         File file = fileChooser.showSaveDialog(mainBorderPane.getScene().getWindow());
 
-        String contentFile = "";
+        StringBuilder contentFile = new StringBuilder();
         if(file != null){
             try {
 
-                contentFile += "Description: " + DescriptionFile.getInstance().getDescription() + "\n";
-                contentFile += "Category: " + DescriptionFile.getInstance().getCategory() + "\n";
-                contentFile += "Description axis x: " + DescriptionFile.getInstance().getAxisX() + "\n";
-                contentFile += "Description axis y: " + DescriptionFile.getInstance().getAxisY() + "\n";
-                contentFile += "Data: \n";
+                contentFile.append("Description: ").append(DescriptionFile.getInstance().getDescription()).append("\n");
+                contentFile.append("Category: ").append(DescriptionFile.getInstance().getCategory()).append("\n");
+                contentFile.append("Description axis x: ").append(DescriptionFile.getInstance().getAxisX()).append("\n");
+                contentFile.append("Description axis y: ").append(DescriptionFile.getInstance().getAxisY()).append("\n");
+                contentFile.append("Data: \n");
 
                 Float value;
                 for (int i = 0; i < ReceivedDataFromSTM.getInstance().getList().size(); ++i){
                     value = ReceivedDataFromSTM.getInstance().getList().get(i);
-                    contentFile += Integer.toString(i) + ", " + value.toString() + " \n";
+                    contentFile.append(Integer.toString(i)).append(", ").append(value.toString()).append(" \n");
                 }
 
                 FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write(contentFile);
+                fileWriter.write(contentFile.toString());
                 fileWriter.close();
 
             } catch (IOException e) {
@@ -110,7 +109,7 @@ public class MainWindow {
     }
 
 
-    public void getDataToSaveFile(){
+    private void getDataToSaveFile(){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
         dialog.setTitle("Description File");
@@ -157,7 +156,7 @@ public class MainWindow {
 
     }
 
-    public void openFile(File file) throws IOException {
+    private void openFile(File file) throws IOException {
 
         FileInputStream fis = new FileInputStream(file);
         byte[] dataFromFile = new byte[(int) file.length()];
@@ -314,7 +313,7 @@ public class MainWindow {
         try{
             dialog.getDialogPane().setContent(fxmlLoader.load());
         } catch (IOException e){
-            System.out.println("Couldn't load the dialog");
+            System.out.println("Couldn't load the dialog ");
             e.printStackTrace();
             return true;
         }

@@ -1,12 +1,8 @@
 package com.polchlopek.praca.magisterska.controller;
 
-import com.polchlopek.praca.magisterska.DTO.notedata.NoteItem;
 import com.polchlopek.praca.magisterska.DTO.notedata.NoteData;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.polchlopek.praca.magisterska.DTO.notedata.NoteItem;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -41,40 +37,29 @@ public class Notes {
     private ContextMenu listContextMenu;
 
     // sortowanie list View
-    SortedList<NoteItem> sortedList = new SortedList<NoteItem>(NoteData.getInstance().getNoteItems(),
-            new Comparator<NoteItem>() {
-                @Override
-                public int compare(NoteItem o1, NoteItem o2) {
-                    return o1.getDeadline().compareTo(o2.getDeadline());
-                }
-            });
+    private SortedList<NoteItem> sortedList = new SortedList<>(NoteData.getInstance().getNoteItems(),
+            Comparator.comparing(NoteItem::getDeadline));
 
     public void initialize(){
 
         // stworzenie menu kontekstowego
         listContextMenu = new ContextMenu();
         MenuItem deleteMenuItem = new MenuItem("Delete");
-        deleteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                NoteItem item = noteListView.getSelectionModel().getSelectedItem();
-                deleteItem(item);
-            }
+        deleteMenuItem.setOnAction(event -> {
+            NoteItem item = noteListView.getSelectionModel().getSelectedItem();
+            deleteItem(item);
         });
         listContextMenu.getItems().addAll(deleteMenuItem);
 
 
         // listener czekajacy na klikniecie naglowka i ustawiajacy opis
-        noteListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<NoteItem>() {
-            @Override
-            public void changed(ObservableValue<? extends NoteItem> observable, NoteItem oldValue, NoteItem newValue) {
-                if(newValue != null){
-                    NoteItem item = noteListView.getSelectionModel().getSelectedItem();
-                    noteDescriptionTextArea.setText(item.getDescription());
-                    DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-                    deadlineLabel.setText(df.format(item.getDeadline()));
-                    authorLabel.setText(item.getAuthor());
-                }
+        noteListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue != null){
+                NoteItem item = noteListView.getSelectionModel().getSelectedItem();
+                noteDescriptionTextArea.setText(item.getDescription());
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+                deadlineLabel.setText(df.format(item.getDeadline()));
+                authorLabel.setText(item.getAuthor());
             }
         });
 
@@ -202,7 +187,7 @@ public class Notes {
         deleteItem(item);
     }
 
-    public void deleteItem(NoteItem item){
+    private void deleteItem(NoteItem item){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete Note Item");
         alert.setHeaderText("Delete note: " + item.getDescription());

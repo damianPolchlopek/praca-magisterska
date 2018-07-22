@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Iterator;
 
 public class NoteData {
 
@@ -36,14 +35,13 @@ public class NoteData {
     public void loadNoteItems() throws IOException {
         noteItems = FXCollections.observableArrayList();
         Path path = Paths.get(filename);
-        BufferedReader myBufferedReader = Files.newBufferedReader(path);
 
         String input;
 
-        try{
-            while((input = myBufferedReader.readLine()) != null){
+        try (BufferedReader myBufferedReader = Files.newBufferedReader(path)) {
+            while ((input = myBufferedReader.readLine()) != null) {
                 String[] itemPieces = input.split("\t");
-                int i=0;
+                int i = 0;
                 String heading = itemPieces[i];
                 String description = itemPieces[++i];
                 String author = itemPieces[++i];
@@ -54,21 +52,14 @@ public class NoteData {
 
                 noteItems.add(noteItem);
             }
-        } finally {
-            if(myBufferedReader != null){
-                myBufferedReader.close();
-            }
         }
     }
 
     public void storeNoteItems() throws IOException {
         Path path = Paths.get(filename);
-        BufferedWriter bw = Files.newBufferedWriter(path);
 
-        try{
-            Iterator<NoteItem> iter = noteItems.iterator();
-            while(iter.hasNext()){
-                NoteItem item = iter.next();
+        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
+            for (NoteItem item : noteItems) {
                 bw.write(String.format("%s\t%s\t%s\t%s",
                         item.getHeading(),
                         item.getDescription(),
@@ -77,10 +68,6 @@ public class NoteData {
                 bw.newLine();
             }
 
-        } finally {
-            if(bw != null){
-                bw.close();
-            }
         }
     }
 
